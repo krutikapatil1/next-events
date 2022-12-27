@@ -2,15 +2,24 @@ import Link from "next/link";
 import classes from "./button.module.css";
 
 interface ButtonProps {
-  link: string;
+  link?: string;
   children: any;
+  onClick: any;
 }
 
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
+  if (props.link) {
+    return (
+      <Link href={props.link} className={classes.btn}>
+        {props.children}
+      </Link>
+    );
+  }
+
   return (
-    <Link href={props.link} className={classes.btn}>
+    <button onClick={props.onClick} className={classes.btn}>
       {props.children}
-    </Link>
+    </button>
   );
 };
 
