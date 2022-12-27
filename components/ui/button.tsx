@@ -4,7 +4,7 @@ import classes from "./button.module.css";
 interface ButtonProps {
   link?: string;
   children: any;
-  onClick: any;
+  onClick?: any;
 }
 
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
