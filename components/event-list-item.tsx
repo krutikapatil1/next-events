@@ -1,10 +1,10 @@
 import Button from "./ui/button";
-import classes from "./event-detail.module.css";
+import classes from "./event-list-item.module.css";
 import AddressIcon from "./icons/address-icon";
 import DateIcon from "./icons/date-icon";
 import ArrowRightIcon from "./icons/arrow-right-icon";
 
-interface EventDetailParams {
+interface EventListItemParams {
   id: string;
   title: string;
   location: string;
@@ -12,7 +12,9 @@ interface EventDetailParams {
   image: string;
 }
 
-const EventDetail: React.FC<EventDetailParams> = (props: EventDetailParams) => {
+const EventDetail: React.FC<EventListItemParams> = (
+  props: EventListItemParams
+) => {
   const { title, image, date, location, id } = props;
   const humanReadableDate = new Date(date).toLocaleDateString("en-US", {
     day: "numeric",
