@@ -1,4 +1,5 @@
 import EventDetail from "./event-detail";
+import classes from "./event-list.module.css";
 
 interface EventListProps {
   items: any;
@@ -7,7 +8,7 @@ interface EventListProps {
 const EventList: React.FC<EventListProps> = (props: EventListProps) => {
   const { items } = props;
   return (
-    <ul>
+    <ul className={classes.list}>
       {items.map((event: any) => (
         <EventDetail
           id={event.id}
