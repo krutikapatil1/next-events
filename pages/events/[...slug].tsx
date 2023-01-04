@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import ErrorAlert from "../../../components/event-detail/error-alert";
-import ResultsTitle from "../../../components/event-detail/results-title";
-import EventList from "../../../components/event-list";
-import Button from "../../../components/ui/button";
-import { getFilteredEvents } from "../../../dummy-data";
+import ErrorAlert from "../../components/event-detail/error-alert";
+import ResultsTitle from "../../components/event-detail/results-title";
+import EventList from "../../components/event-list";
+import Button from "../../components/ui/button";
+import { getFilteredEvents } from "../../dummy-data";
 
 const EventsFilterPage = () => {
   const router = useRouter();
