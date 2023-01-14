@@ -3,6 +3,7 @@ import EventsSearch from "../../components/event-detail/events-search";
 import EventList from "../../components/event-list";
 import { getEvents } from "../../helpers/api_util";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 interface EventsProps {
   events: any;
@@ -18,6 +19,10 @@ const Events: React.FC<EventsProps> = (props: EventsProps) => {
 
   return (
     <Fragment>
+      <Head>
+        <title>All Events</title>
+        <meta name="description" content="A list of all the events" />
+      </Head>
       <EventsSearch onSearch={searchHandler} />
       <EventList items={props.events} />
     </Fragment>

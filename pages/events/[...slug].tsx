@@ -5,6 +5,7 @@ import EventList from "../../components/event-list";
 import Button from "../../components/ui/button";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import Head from "next/head";
 
 interface EventsFilterPageParams {
   events: any;
@@ -100,13 +101,23 @@ const EventsFilterPage: React.FC<EventsFilterPageParams> = (
       );
     }
     date = new Date(yearNum, monthNum - 1);
+
+    return (
+      <Fragment>
+        <Head>
+          <title>Filtered Events</title>
+          <meta
+            name="description"
+            content={`All events from ${monthNum}/${yearNum}`}
+          />
+        </Head>
+        <ResultsTitle date={date} />
+        <EventList items={filteredSearchEvents} />
+      </Fragment>
+    );
+  } else {
+    return <h1>Invalid search params</h1>;
   }
-  return (
-    <Fragment>
-      <ResultsTitle date={date} />
-      <EventList items={filteredSearchEvents} />
-    </Fragment>
-  );
 };
 
 // export const getServerSideProps = async (context: any) => {
