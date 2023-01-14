@@ -1,6 +1,7 @@
 // import { getFeaturedEvents } from "../dummy-data";
 import EventList from "../components/event-list";
 import { getFeaturedEvents } from "../helpers/api_util";
+import Head from "next/head";
 
 interface StartingPageProps {
   events?: any;
@@ -9,7 +10,18 @@ interface StartingPageProps {
 const StartingPage: React.FC<StartingPageProps> = (
   props: StartingPageProps
 ) => {
-  return <EventList items={props.events} />;
+  return (
+    <div>
+      <Head>
+        <title>Next Js Events</title>
+        <meta
+          name="description"
+          content="A list of events for you to evolve..."
+        />
+      </Head>
+      <EventList items={props.events} />
+    </div>
+  );
 };
 
 export const getStaticProps = async () => {
