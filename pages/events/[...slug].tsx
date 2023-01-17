@@ -101,23 +101,17 @@ const EventsFilterPage: React.FC<EventsFilterPageParams> = (
       );
     }
     date = new Date(yearNum, monthNum - 1);
-
-    return (
-      <Fragment>
-        <Head>
-          <title>Filtered Events</title>
-          <meta
-            name="description"
-            content={`All events from ${monthNum}/${yearNum}`}
-          />
-        </Head>
-        <ResultsTitle date={date} />
-        <EventList items={filteredSearchEvents} />
-      </Fragment>
-    );
-  } else {
-    return <h1>Invalid search params</h1>;
   }
+  return (
+    <Fragment>
+      <Head>
+        <title>Filtered Events</title>
+        <meta name="description" content={`All events from `} />
+      </Head>
+      <ResultsTitle date={date} />
+      <EventList items={filteredSearchEvents} />
+    </Fragment>
+  );
 };
 
 // export const getServerSideProps = async (context: any) => {

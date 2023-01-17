@@ -1,21 +1,24 @@
 import classes from "./comment-list.module.css";
+import { useEffect, useState } from "react";
 
-const CommentList: React.FC = () => {
+interface CommentListProps {
+  comments: any[];
+}
+
+const CommentList: React.FC<CommentListProps> = ({
+  comments,
+}: CommentListProps) => {
   return (
     <ul className={classes.comments}>
-      {/* Render list of comments - fetched from API */}
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
-      <li>
-        <p>My comment is amazing!</p>
-        <div>
-          By <address>Maximilian</address>
-        </div>
-      </li>
+      {Array.isArray(comments) &&
+        comments.map((comment: any) => (
+          <li key={comment.id}>
+            <p>{comment.comment}</p>
+            <div>
+              By <address>{comment.name}</address>
+            </div>
+          </li>
+        ))}
     </ul>
   );
 };

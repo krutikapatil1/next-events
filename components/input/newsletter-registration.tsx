@@ -10,12 +10,12 @@ const NewsletterRegistration: React.FC = () => {
       body: JSON.stringify({
         email: emailInputRef.current?.value,
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => console.log(data));
-    // fetch user input (state or refs)
-    // optional: validate input
-    // send valid data to API
   };
 
   return (

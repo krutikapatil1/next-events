@@ -11,14 +11,15 @@ export const getComments = (filePath: string) => {
 };
 
 const handler = (req: any, res: any) => {
-  const commentId = req.query.commentId;
+  const eventId = req.query.eventId;
   if (req.method === "POST") {
     const requestBody = JSON.parse(req.body);
     const filePath = getFilePath();
     const data = getComments(filePath);
 
     data.push({
-      id: commentId,
+      id: new Date(),
+      eventId: eventId,
       email: requestBody.email,
       name: requestBody.name,
       comment: requestBody.comment,
@@ -30,10 +31,10 @@ const handler = (req: any, res: any) => {
     const filePath = getFilePath();
     const data = getComments(filePath);
 
-    const filteredComment = data.find(
-      (comment: any) => comment.id === commentId
+    const filteredComments = data.filter(
+      (comment: any) => comment.eventId === eventId
     );
-    res.status(200).json({ comment: filteredComment });
+    res.status(200).json({ filteredComments: filteredComments });
   } else {
     res.status(400).json({ message: "Invalid request" });
   }

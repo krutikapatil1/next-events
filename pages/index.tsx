@@ -2,6 +2,7 @@
 import EventList from "../components/event-list";
 import { getFeaturedEvents } from "../helpers/api_util";
 import Head from "next/head";
+import NewsletterRegistration from "../components/input/newsletter-registration";
 
 interface StartingPageProps {
   events?: any;
@@ -19,6 +20,7 @@ const StartingPage: React.FC<StartingPageProps> = (
           content="A list of events for you to evolve..."
         />
       </Head>
+      <NewsletterRegistration />
       <EventList items={props.events} />
     </div>
   );

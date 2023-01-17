@@ -5,6 +5,7 @@ import EventLogistics from "../../../components/event-detail/event-logistics";
 import EventSummary from "../../../components/event-detail/event-summary";
 import { getEventById, getFeaturedEvents } from "../../../helpers/api_util";
 import Head from "next/head";
+import Comments from "../../../components/input/comments";
 
 interface EventsDetailPageProps {
   selectedEvent: any;
@@ -41,6 +42,7 @@ const EventsDetailPage: React.FC<EventsDetailPageProps> = (
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id} />
     </Fragment>
   );
 };

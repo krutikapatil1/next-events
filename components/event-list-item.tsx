@@ -3,6 +3,7 @@ import classes from "./event-list-item.module.css";
 import AddressIcon from "./icons/address-icon";
 import DateIcon from "./icons/date-icon";
 import ArrowRightIcon from "./icons/arrow-right-icon";
+import Image from "next/image";
 
 interface EventListItemParams {
   id: string;
@@ -28,7 +29,7 @@ const EventDetail: React.FC<EventListItemParams> = (
 
   return (
     <li className={classes.item}>
-      <img src={"/" + image} alt={title} />
+      <Image src={"/" + image} alt={title} width={640} height={160} />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>
