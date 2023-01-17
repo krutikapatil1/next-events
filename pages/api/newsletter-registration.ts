@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { connectDatabase, insertDocument } from "../../helpers/db_util";
 
 const handler = async (req: any, res: any) => {
   if (req.method === "POST") {
@@ -8,15 +8,22 @@ const handler = async (req: any, res: any) => {
       return;
     }
 
-    const client = await MongoClient.connect(
-      "mongodb+srv://nextJsPractice:nextJsPractice34@cluster0.h3k9eua.mongodb.net/newsletter?retryWrites=true&w=majority"
-    );
+    let client;
+    try {
+      client = await connectDatabase();
+    } catch (err) {
+      res.status(500).json({ message: "Error connecting to the database" });
+      return;
+    }
 
-    const db = client.db();
-    await db.collection("emails").insertOne({ email: emailToRegister });
+    try {
+      await insertDocument(client, "newsletter", { email: emailToRegister });
+    } catch (err) {
+      res.status(500).json({ message: "Failed to insert the document" });
+      return;
+    }
 
     client.close();
-
     res.status(201).json({ message: "Signed Up!" });
   } else {
     res.status(400).json({ message: "Invalid request" });

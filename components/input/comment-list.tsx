@@ -12,7 +12,7 @@ const CommentList: React.FC<CommentListProps> = ({
     <ul className={classes.comments}>
       {Array.isArray(comments) &&
         comments.map((comment: any) => (
-          <li key={comment.id}>
+          <li key={comment._id}>
             <p>{comment.comment}</p>
             <div>
               By <address>{comment.name}</address>

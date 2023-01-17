@@ -1,17 +1,21 @@
-import fs from "fs";
-import path from "path";
+import { MongoClient } from "mongodb";
+import {
+  connectDatabase,
+  getDocuments,
+  insertDocument,
+} from "../../../helpers/db_util";
 
-export const getFilePath = () => {
-  return path.join(process.cwd(), "data", "comments.json");
-};
-
-export const getComments = (filePath: string) => {
-  const fileData = fs.readFileSync(filePath);
-  return JSON.parse(fileData.toString());
-};
-
-const handler = (req: any, res: any) => {
+const handler = async (req: any, res: any) => {
   const eventId = req.query.eventId;
+
+  let client;
+  try {
+    client = await connectDatabase();
+  } catch (err) {
+    res.status(500).json({ message: "Connection to db failed" });
+    return;
+  }
+
   if (req.method === "POST") {
     const { email, name, comment } = req.body;
 
@@ -26,29 +30,43 @@ const handler = (req: any, res: any) => {
       res.status(422).json({ message: "Invalid input" });
       return;
     }
-    const filePath = getFilePath();
-    const data = getComments(filePath);
 
-    data.push({
-      id: new Date().toISOString(),
+    const newComment = {
       eventId: eventId,
       email: email,
       name: name,
       comment: comment,
-    });
+    };
 
-    fs.writeFileSync(filePath, JSON.stringify(data));
-    res.status(201).json({ message: "Comment added successfully" });
+    let result;
+    try {
+      result = await insertDocument(client, "comments", newComment);
+    } catch (err) {
+      res.status(500).json({ message: "Inserting to db failed" });
+      return;
+    }
+
+    newComment._id = result.insertedId.toString();
+    client.close();
+    res.status(201).json({ newComment });
   } else if (req.method === "GET") {
-    const filePath = getFilePath();
-    const data = getComments(filePath);
+    let result;
+    try {
+      result = await getDocuments(
+        client,
+        "comments",
+        { eventId: eventId },
+        { _id: -1 }
+      );
+    } catch (err) {
+      res.status(500).json({ message: "getting document failed" });
+      return;
+    }
 
-    const filteredComments = data.filter(
-      (comment: any) => comment.eventId === eventId
-    );
-    res.status(200).json({ filteredComments: filteredComments });
+    res.status(200).json({ filteredComments: result });
   } else {
     res.status(400).json({ message: "Invalid request" });
   }
+  client.close();
 };
 export default handler;
