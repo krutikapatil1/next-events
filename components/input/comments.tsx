@@ -35,6 +35,9 @@ const Comments: React.FC<CommentsProps> = (props: CommentsProps) => {
         name: commentData.name,
         comment: commentData.text,
       }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => console.log(data));

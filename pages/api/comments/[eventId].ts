@@ -13,16 +13,28 @@ export const getComments = (filePath: string) => {
 const handler = (req: any, res: any) => {
   const eventId = req.query.eventId;
   if (req.method === "POST") {
-    const requestBody = JSON.parse(req.body);
+    const { email, name, comment } = req.body;
+
+    if (
+      !email ||
+      !email.includes("@") ||
+      !name ||
+      name.trim() === "" ||
+      !comment ||
+      comment.trim() === ""
+    ) {
+      res.status(422).json({ message: "Invalid input" });
+      return;
+    }
     const filePath = getFilePath();
     const data = getComments(filePath);
 
     data.push({
-      id: new Date(),
+      id: new Date().toISOString(),
       eventId: eventId,
-      email: requestBody.email,
-      name: requestBody.name,
-      comment: requestBody.comment,
+      email: email,
+      name: name,
+      comment: comment,
     });
 
     fs.writeFileSync(filePath, JSON.stringify(data));
